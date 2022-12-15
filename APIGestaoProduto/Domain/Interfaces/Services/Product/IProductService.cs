@@ -8,8 +8,8 @@ namespace Domain.Interfaces.Services.Produtos
 	{
 		Task<Product> Get(long id);
 		Task<IEnumerable<Product>> GetAll();
-		Task<Product> Post(Product Product);
-		Task<Product> Put(Product Product);
+		Task<Product> Post(Product product);
+		Task<Product> Put(Product product);
 		Task<bool> Delete(long id);
 	}
 }

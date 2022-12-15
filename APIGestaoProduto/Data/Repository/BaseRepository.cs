@@ -11,7 +11,7 @@ namespace Data.Repository
 	public class BaseRepository<T> : IRepository<T> where T : BaseEntity
 	{
 		protected readonly DomainContext _contentext;
-		private DbSet<T> _dataSet;
+		private readonly DbSet<T> _dataSet;
 
 		public BaseRepository(DomainContext context)
 		{
@@ -45,7 +45,7 @@ namespace Data.Repository
 
 		public async Task<T> SelectAsync(long id)
 		{
-			return await _dataSet.SingleOrDefaultAsync(e => e.Id.Equals(entity.Id));
+			return await _dataSet.SingleOrDefaultAsync(e => e.Id.Equals(id));
 		}
 
 		public async Task<IEnumerable<T>> SelectManyAsync()

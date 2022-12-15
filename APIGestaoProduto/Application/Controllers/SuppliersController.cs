@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Application.Controllers
@@ -7,10 +8,18 @@ namespace Application.Controllers
 	[ApiController]
 	public class SuppliersController : ControllerBase
 	{
+		private readonly ISupplierService _supplierService;
+
+		public SuppliersController(ISupplierService supplierService)
+		{
+			_supplierService = supplierService;
+		}
+
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			return Ok();
+			var suppliers = await _supplierService.GetAll();
+			return Ok(suppliers);
 		}
 
 		[HttpGet("{id}")]

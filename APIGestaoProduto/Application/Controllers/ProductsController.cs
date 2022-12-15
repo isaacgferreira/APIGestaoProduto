@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Domain.Interfaces.Services.Produtos;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Application.Controllers
@@ -7,10 +8,18 @@ namespace Application.Controllers
 	[ApiController]
 	public class ProductsController : ControllerBase
 	{
+		private readonly IProductService _productService;
+
+		public ProductsController(IProductService productService)
+		{
+			_productService = productService;
+		}
+
 		[HttpGet]
 		public async Task<IActionResult> Get()
 		{
-			return Ok();
+			var products = await _productService.GetAll();
+			return Ok(products);
 		}
 
 		[HttpGet("{id}")]

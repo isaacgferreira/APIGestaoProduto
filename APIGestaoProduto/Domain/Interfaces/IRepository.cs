@@ -9,7 +9,8 @@ namespace Domain.Interfaces
 		Task<T> InsertAsync(T entity);
 		Task<T> UpdateAsync(T entity);
 		Task<bool> DeleteAsync(long id);
-		Task<T> SelectAsync(long id);
+		Task<T> SelectAsync(long? id);
 		Task<IEnumerable<T>> SelectManyAsync();
+		Task<bool> ExistAsync(long? id);
 	}
 }

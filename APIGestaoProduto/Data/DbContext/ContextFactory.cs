@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using System;
 
 namespace Data.Context
 {
@@ -7,7 +8,7 @@ namespace Data.Context
 	{
 		public DomainContext CreateDbContext(string[] args)
 		{
-			var conectionString = "Initial Catalog=ApiGestaoProduto;Server=localhost; User Id=isaac; Password=123456";
+			var conectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
 			var optionsBuilder = new DbContextOptionsBuilder<DomainContext>();
 			optionsBuilder.UseSqlServer(conectionString);
 			return new DomainContext(optionsBuilder.Options);

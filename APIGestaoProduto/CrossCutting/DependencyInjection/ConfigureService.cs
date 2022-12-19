@@ -7,10 +7,10 @@ namespace CrossCutting.DependencyInjection
 {
 	public static class ConfigureService
 	{
-		public static void ConfigureDependenciesService(IServiceCollection serviceCollection)
+		public static void ConfigureDependenciesService(IServiceCollection services)
 		{
-			serviceCollection.AddTransient<IProductService, ProductService>();
-			serviceCollection.AddTransient<ISupplierService, SupplierService>();
+			services.AddTransient<IProductService, ProductService>();
+			services.AddTransient<ISupplierService, SupplierService>();
 		}
 	}
 }

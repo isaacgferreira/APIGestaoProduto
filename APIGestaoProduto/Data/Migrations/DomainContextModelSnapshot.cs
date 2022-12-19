@@ -26,9 +26,10 @@ namespace Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreateAt")
+                    b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 18, 19, 23, 47, 34, DateTimeKind.Utc).AddTicks(2090));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -41,21 +42,20 @@ namespace Data.Migrations
                     b.Property<DateTime?>("FabricatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("Situation")
-                        .IsRequired()
-                        .HasColumnType("bit");
+                    b.Property<bool>("Situation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<long?>("SupplierId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("UpdateAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SupplierId")
-                        .IsUnique()
-                        .HasFilter("[SupplierId] IS NOT NULL");
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("product");
                 });
@@ -71,15 +71,22 @@ namespace Data.Migrations
                         .HasMaxLength(14)
                         .HasColumnType("nvarchar(14)");
 
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2022, 12, 18, 19, 23, 47, 45, DateTimeKind.Utc).AddTicks(6232));
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("UpdateAt")
+                    b.Property<bool>("Situation")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -90,15 +97,15 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Product", b =>
                 {
                     b.HasOne("Domain.Entities.Supplier", "Supplier")
-                        .WithOne("Product")
-                        .HasForeignKey("Domain.Entities.Product", "SupplierId");
+                        .WithMany("Products")
+                        .HasForeignKey("SupplierId");
 
                     b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Domain.Entities.Supplier", b =>
                 {
-                    b.Navigation("Product");
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,6 @@ using Domain.Interfaces;
 using Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace CrossCutting.DependencyInjection
 {
@@ -16,8 +15,8 @@ namespace CrossCutting.DependencyInjection
 			services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 			services.AddScoped(typeof(ISupplierRepository), typeof(SupplierRepository));
 
-			string dbConnection = Environment.GetEnvironmentVariable("DB_CONNECTION");
-			services.AddDbContext<DomainContext>(options => options.UseSqlServer(dbConnection));
+			string dbConnection = "Initial Catalog=ApiGestaoProduto;Server=localhost";
+			services.AddDbContext<DomainContext>(opt => opt.UseInMemoryDatabase(dbConnection));
 		}
 	}
 }

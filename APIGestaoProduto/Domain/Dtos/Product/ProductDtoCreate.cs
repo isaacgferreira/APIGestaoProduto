@@ -5,8 +5,8 @@ namespace Domain.Dtos
 {
 	public class ProductDtoCreate
 	{
-		[Required(ErrorMessage = "Descrição do Produto é obrigatório.")]
-		[StringLength(100, ErrorMessage = "Nome deve ter no máximo {1} caracteres.")]
+		[Required(ErrorMessage = "Product Description is required.")]
+		[StringLength(100, ErrorMessage = "Product description must be a maximum of {1} characters.")]
 		public string Description { get; set; }
 
 		public DateTime? FabricatedAt { get; set; }

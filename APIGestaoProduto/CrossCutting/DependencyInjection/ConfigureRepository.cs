@@ -15,8 +15,8 @@ namespace CrossCutting.DependencyInjection
 			services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 			services.AddScoped(typeof(ISupplierRepository), typeof(SupplierRepository));
 
-			string dbConnection = "Initial Catalog=ApiGestaoProduto;Server=localhost";
-			services.AddDbContext<DomainContext>(opt => opt.UseInMemoryDatabase(dbConnection));
+			string dbConnection = "Initial Catalog=ApiGestaoProduto;Server=localhost; User Id=isaac; Password=123456";
+			services.AddDbContext<DomainContext>(opt => opt.UseSqlServer(dbConnection));
 		}
 	}
 }

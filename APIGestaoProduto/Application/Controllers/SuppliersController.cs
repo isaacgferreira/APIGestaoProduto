@@ -1,10 +1,14 @@
-﻿using Domain.Interfaces.Services;
+﻿using Domain.Dtos;
+using Domain.Dtos.Supplier;
+using Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Application.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/suppliers")]
 	[ApiController]
 	public class SuppliersController : ControllerBase
 	{
@@ -16,34 +20,88 @@ namespace Application.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Get()
+		public async Task<IActionResult> Get(PaginatedListSupplierDto paginatedListSupplierDto)
 		{
-			var suppliers = await _supplierService.GetAll();
-			return Ok(suppliers);
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				var response = await _supplierService.GetPaginated(paginatedListSupplierDto);
+				return Ok(response);
+			}
+			catch (ArgumentException ex)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+			}
 		}
 
 		[HttpGet("{id}")]
 		public async Task<IActionResult> Get(int id)
 		{
-			return Ok();
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				var response = await _supplierService.Get(id);
+				return Ok(response);
+			}
+			catch (ArgumentException ex)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+			}
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Post([FromBody] string value)
+		public async Task<IActionResult> Post([FromBody] SupplierDtoCreate supplierDto)
 		{
-			return Ok();
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				var response = await _supplierService.Post(supplierDto);
+				return Ok(response);
+			}
+			catch (ArgumentException ex)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+			}
 		}
 
-		[HttpPut("{id}")]
-		public async Task<IActionResult> Put(int id, [FromBody] string value)
+		[HttpPut]
+		public async Task<IActionResult> Put([FromBody] SupplierDtoUpdate supplierDto)
 		{
-			return Ok();
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				var response = await _supplierService.Put(supplierDto);
+				return Ok(response);
+			}
+			catch (ArgumentException ex)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+			}
 		}
 
-		[HttpDelete("{id}")]
-		public async Task<IActionResult> Delete(int id)
+		[HttpPatch]
+		public async Task<IActionResult> ChangeSituation(SupplierDtoSituation supplierDtoSituation)
 		{
-			return Ok();
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
+			try
+			{
+				var response = await _supplierService.ChangeSituation(supplierDtoSituation);
+				return Ok(response);
+			}
+			catch (ArgumentException ex)
+			{
+				return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Data.Mapping
 {
@@ -10,10 +11,10 @@ namespace Data.Mapping
 		{
 			builder.ToTable("product");
 			builder.HasKey(p => p.Id);
-			builder.Property(p => p.CreateAt).ValueGeneratedOnAdd();
+			builder.Property(p => p.CreatedAt).IsRequired().HasDefaultValue(DateTime.UtcNow.Date);
 			builder.Property(p => p.Description).IsRequired().HasMaxLength(100);
-			builder.Property(p => p.Situation).IsRequired();
-			builder.HasOne(p => p.Supplier).WithOne(f => f.Product).HasForeignKey<Product>(b => b.SupplierId);
+			builder.Property(p => p.Situation).IsRequired().HasDefaultValue(true);
+			builder.HasOne(p => p.Supplier).WithMany(s => s.Products);
 		}
 	}
 }

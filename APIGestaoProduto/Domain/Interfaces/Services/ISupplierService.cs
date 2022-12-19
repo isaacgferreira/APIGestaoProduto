@@ -1,15 +1,16 @@
-﻿using Domain.Entities;
-using System.Collections.Generic;
+﻿using Domain.Dtos;
+using Domain.Dtos.Supplier;
 using System.Threading.Tasks;
 
 namespace Domain.Interfaces.Services
 {
 	public interface ISupplierService
 	{
-		Task<Supplier> Get(long id);
-		Task<IEnumerable<Supplier>> GetAll();
-		Task<Supplier> Post(Supplier supplier);
-		Task<Supplier> Put(Supplier supplier);
-		Task<bool> Delete(long id);
+		Task<SupplierDtoResponse> Get(long? id);
+		Task<PaginatedListResponse<SupplierDtoResponse>> GetPaginated(PaginatedListSupplierDto paginatedListSupplierDto);
+		Task<BaseResponse<SupplierDtoResponse>> Post(SupplierDtoCreate supplierDtoCreate);
+		Task<BaseResponse<SupplierDtoResponse>> Put(SupplierDtoUpdate supplierDtoUpdate);
+		Task<BaseResponse<SupplierDtoResponse>> ChangeSituation(SupplierDtoSituation supplierDtoSituation);
+		Task<bool> ExistAsync(long? id);
 	}
 }

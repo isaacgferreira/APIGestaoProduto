@@ -22,10 +22,8 @@ namespace Application.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Get(PaginatedListProductDto paginatedListProductDto)
 		{
-			var teste = new ValidationProblemDetails(ModelState);
-
-			//if (!ModelState.IsValid)
-			//return BadRequest(ModelState);
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
 
 			try
 			{

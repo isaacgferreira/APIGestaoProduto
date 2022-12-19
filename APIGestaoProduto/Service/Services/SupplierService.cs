@@ -56,9 +56,6 @@ namespace Service.Services
 
 		public async Task<PaginatedListResponse<SupplierDtoResponse>> GetPaginated(PaginatedListSupplierDto paginatedListSupplierDto)
 		{
-			//var listSupplier = await _repository.SelectManyAsync();
-			//return _mapper.Map<IEnumerable<SupplierDtoResponse>>(listSupplier);
-
 			var pagination = _mapper.Map<PaginatedListSupplierModel>(paginatedListSupplierDto);
 
 			var paginated = await _repository.GetMany(pagination);
